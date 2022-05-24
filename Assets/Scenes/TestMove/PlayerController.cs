@@ -107,11 +107,6 @@ public class PlayerController: MonoBehaviour
         rigidbody = gameObject.GetComponent<Rigidbody>();
     }
 
-    private void FixedUpdate()
-    {
-        rigidbody.MovePosition(rigidbody.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
-    }
-
     /// <summary>
     /// Update is called once per frame
     /// </summary>
@@ -120,10 +115,12 @@ public class PlayerController: MonoBehaviour
         UpdateSpeedUp();
         UpdateMoveDir();
         UpdatePlayerStatus();
-        //Debug.Log(isRunning);
-        //Debug.Log("moveDir:" + moveDir);
-        //Debug.Log(rigidbody.position);
     }
+    private void FixedUpdate()
+    {
+        rigidbody.MovePosition(rigidbody.position + transform.TransformDirection(moveDir) * moveSpeed * Time.deltaTime);
+    }
+
     /// <summary>
     /// 更新移动速度
     /// </summary>

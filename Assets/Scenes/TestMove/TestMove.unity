@@ -128,6 +128,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1121870609, guid: e0536a8d07be9bd4e93dfc5cbfc19f02, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1161245313, guid: e0536a8d07be9bd4e93dfc5cbfc19f02, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7653360434375062744, guid: e0536a8d07be9bd4e93dfc5cbfc19f02,
         type: 3}
       propertyPath: m_RootOrder
@@ -190,6 +198,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0536a8d07be9bd4e93dfc5cbfc19f02, type: 3}
+--- !u!1 &120133494 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7653360434375062748, guid: e0536a8d07be9bd4e93dfc5cbfc19f02,
+    type: 3}
+  m_PrefabInstance: {fileID: 3789943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1950167104
 GameObject:
   m_ObjectHideFlags: 0
@@ -296,6 +310,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
+      propertyPath: ground
+      value: 
+      objectReference: {fileID: 120133494}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
       propertyPath: cameraUnDownCoefficient
       value: 12
       objectReference: {fileID: 0}
@@ -303,6 +322,11 @@ PrefabInstance:
         type: 3}
       propertyPath: cameraLeftRightCoefficient
       value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230281157863519, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8659288218860126346, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
