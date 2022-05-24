@@ -303,31 +303,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2881266352572974623, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
-        type: 3}
-      propertyPath: swervingTime
-      value: 0.2
-      objectReference: {fileID: 0}
     - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
       propertyPath: ground
       value: 
       objectReference: {fileID: 120133494}
-    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
-        type: 3}
-      propertyPath: cameraUnDownCoefficient
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
-        type: 3}
-      propertyPath: cameraLeftRightCoefficient
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 5607230281157863519, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8659288218860126346, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
       propertyPath: m_Name
@@ -388,6 +368,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8659288218860126345, guid: 1a5a373ee69b0c242b71f41ac1a3bc46, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a5a373ee69b0c242b71f41ac1a3bc46, type: 3}

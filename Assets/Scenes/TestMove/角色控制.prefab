@@ -50,14 +50,15 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: 5, z: -10}
   cameraRotate: {x: 15, y: 0, z: 0}
   cameraLookUpTarget: {fileID: 5607230279113803400}
-  useCameraLerp: 1
+  useCameraLerp: 0
   playerMoveLerp: 0.25
   playerRunningLerp: 0.2
   playerSringtLerp: 0.15
   playerStopLerp: 0.1
   cameraLerpChange: 0.05
-  cameraLeftRightCoefficient: 10
-  cameraUnDownCoefficient: 18
+  cameraLeftRightCoefficient: 18
+  cameraUnDownCoefficient: 12
+  ground: {fileID: 0}
 --- !u!1 &5607230279113803400
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +108,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5607230281157863518
 Transform:
   m_ObjectHideFlags: 0
@@ -191,7 +192,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8659288218860126351}
-  - component: {fileID: 8659288218860126345}
   m_Layer: 0
   m_Name: "\u89D2\u8272\u63A7\u5236"
   m_TagString: Untagged
@@ -215,28 +215,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8659288218860126345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8659288218860126346}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30541dfd9e68dae4b89e09aa2da46fdc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Player: {fileID: 6727309627550740738}
-  cameraManager: {fileID: 1525346938840239545}
-  cameraOffset: {x: 0, y: 5, z: -15}
-  cameraRotate: {x: 15, y: 0, z: 0}
-  useCameraLerp: 1
-  playerMoveLerp: 0.25
-  playerRunningLerp: 0.2
-  playerSringtLerp: 0.15
-  playerStopLerp: 0.1
-  cameraLerpChange: 0.05
 --- !u!1 &8659288219907215101
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,7 +323,7 @@ PrefabInstance:
     - target: {fileID: -7292328787287735784, guid: 27bc4f03bfc213f409c6e58ef3d84a55,
         type: 3}
       propertyPath: swervingTime
-      value: 0.1
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: -7292328787287735784, guid: 27bc4f03bfc213f409c6e58ef3d84a55,
         type: 3}
