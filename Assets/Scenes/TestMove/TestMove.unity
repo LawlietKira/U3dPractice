@@ -308,6 +308,51 @@ PrefabInstance:
       propertyPath: ground
       value: 
       objectReference: {fileID: 120133494}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: useCameraLerp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: cameraOffset.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: cameraOffset.z
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: playerMoveLerp
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: playerSringtLerp
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: playerRunningLerp
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: cameraUnDownOffset
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: cameraUnDownCoefficient
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: cameraLeftRightCoefficient
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8659288218860126346, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
       propertyPath: m_Name

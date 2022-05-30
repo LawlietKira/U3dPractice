@@ -30,19 +30,21 @@ public class Camera3DController : MonoBehaviour
 
     [Header("鼠标灵敏度")]
     [LabelText("鼠标左右灵敏度")]
-    public float cameraLeftRightCoefficient = 1;
+    public int cameraLeftRightCoefficient = 1;
     [LabelText("鼠标上下灵敏度")]
-    public float cameraUnDownCoefficient = 1;
-
+    public int cameraUnDownCoefficient = 1;
+    [LabelText("鼠标上下移动偏差系数")]
+    public float cameraUnDownOffset = 0.6f;
 
     [LabelText("地面")]
     public GameObject ground;
     private Rigidbody myRigidbody;
     private PlayerController playerController;
     private float currentLerp = 1;
-    private Vector3 _lastPoint = new Vector3();
-    private Vector3 _currentPosition = new Vector3();
     private Vector3 groundScale;
+    private Vector3 baseCameraOffset;
+    private float baseDistance;
+    private Vector3 lasetPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -55,30 +57,45 @@ public class Camera3DController : MonoBehaviour
         // 取消世界空间重力影响
         //myRigidbody.useGravity = false;
 
+        // 记录默认的相机偏移
+        baseCameraOffset = cameraOffset;
+
         playerController = Player.transform.GetComponent<PlayerController>();
 
         currentLerp = playerStopLerp;
         //UpdateCameraPosition();
 
         transform.localPosition = Player.transform.localPosition;
-        _currentPosition = _lastPoint = Input.mousePosition;
 
         groundScale = ground.transform.localScale;
         groundScale.y = 0;
+
+        // 默认相机到人的距离
+        baseDistance = baseCameraOffset.magnitude;
+
+        Cursor.visible = false; //隐藏鼠标指针
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        UpdateCameraPosition();
-        //UpdateCameraRotation();
     }
 
-
-    private void Update()
+    private void LateUpdate()
     {
+        UpdateCameraPosition();
         DrawLine();
+        //Debug.Log("Player:" + Player.transform.position);
     }
+
+    private Vector3 GetMouseMove()
+    {
+        return new Vector3(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+    }
+    /// <summary>
+    /// 画网格线
+    /// </summary>
     void DrawLine ()
     {
         int s = 10;
@@ -93,7 +110,10 @@ public class Camera3DController : MonoBehaviour
             Vector3 startPoint = position - groundScale * s / 2 + new Vector3(i * s, 0, 0);
             Debug.DrawLine(startPoint, startPoint + new Vector3(0, 0, groundScale.z * s), Color.black);
         }
+        // 角色画线
         Debug.DrawLine(cameraLookUpTarget.transform.position + Vector3.down, cameraLookUpTarget.transform.position + Vector3.up, Color.red);
+        // 相机画线
+        //Debug.DrawLine(camera.transform.position, camera.transform.position + camera.transform.forward * baseDistance, Color.red);
     }
 
     void UpdateCameraLerp()
@@ -126,11 +146,12 @@ public class Camera3DController : MonoBehaviour
     }
 
     /// <summary>
-    /// 更新相机的位置
+    /// 更新相机追随角色的位置
     /// </summary>
     void UpdateCameraManagerPosition ()
     {
-        transform.position = Vector3.Lerp(transform.position, Player.transform.position, currentLerp);
+        //camera.transform.localPosition = cameraOffset;
+        transform.localPosition = Vector3.Lerp(transform.localPosition, Player.transform.localPosition, currentLerp);
     }
 
     /// <summary>
@@ -138,11 +159,12 @@ public class Camera3DController : MonoBehaviour
     /// </summary>
     void UpdateCameraPosition()
     {
-        //Debug.Log(Vector3.Lerp(camera.transform.position, Player.transform.position + cameraOffset, lerp));
+        // 更新相机Lerp数据
         UpdateCameraLerp();
+        // 更新相机的位移
         UpdateCameraManagerPosition();
+        // 更新相机的旋转
         UpdateCameraManagerRotation();
-        //UpdateCameraRotation();
         //camera.transform.position = Vector3.Lerp(camera.transform.position, Player.transform.position + cameraOffset, currentLerp);
     }
 
@@ -151,12 +173,13 @@ public class Camera3DController : MonoBehaviour
     /// </summary>
     void UpdateCameraManagerRotation()
     {
-        _currentPosition = Input.mousePosition;
-        Vector3 diff = (_currentPosition - _lastPoint);
+        //_currentPosition = GetMouseMove();
+        Vector3 diff = GetMouseMove();
+        // 相机左右旋转
         transform.Rotate(new Vector3(0, UpdateCameraRotate(diff.x), 0));
+        // 判断相机与玩家夹角，控制仰角俯角的最大限制
         UpdateCameraRotateX(diff.y);
         Player.transform.rotation = transform.rotation;
-        _lastPoint = _currentPosition;
     }
 
     /// <summary>
@@ -166,7 +189,7 @@ public class Camera3DController : MonoBehaviour
     /// <returns></returns>
     private float UpdateCameraRotate (float defaultMove)
     {
-        return Reduce(defaultMove) * (cameraLeftRightCoefficient + 5) / 100;
+        return Reduce(defaultMove) * (cameraLeftRightCoefficient + 5) / 10;
     }
 
     private float Reduce (float defaultMove)
@@ -179,14 +202,14 @@ public class Camera3DController : MonoBehaviour
     /// <param name="defaultMoveY"></param>
     private void UpdateCameraRotateX (float defaultMoveY)
     {
-        Vector3 rotate = new Vector3(-Reduce(defaultMoveY) * (cameraUnDownCoefficient + 5) / 100, 0, 0);
-
+        Vector3 rotate = new Vector3(-Reduce(defaultMoveY) * (cameraUnDownCoefficient + 5) / 10, 0, 0);
+        // 计算相机方向，与角色头的夹角
         float v = Vector3.Angle(camera.transform.forward, Player.transform.up);
-        if (v < 10)
+        if (v < 20)
         {
             if (rotate.x > 0)
                 camera.transform.Rotate(rotate.x, rotate.y, rotate.z);
-        } else if (v > 160)
+        } else if (v > 150)
         {
             if (rotate.x < 0)
                 camera.transform.Rotate(rotate.x, rotate.y, rotate.z);
@@ -194,6 +217,16 @@ public class Camera3DController : MonoBehaviour
         else
         {
             camera.transform.Rotate(rotate.x, rotate.y, rotate.z);
-        } 
+        }
+        // 鼠标上下移动时位置偏移
+        camera.transform.localPosition = baseCameraOffset + transform.InverseTransformVector(camera.transform.up).normalized * UpdateCameraLookUpPlayer(v);
+    }
+
+    /// <summary>
+    /// 鼠标上下移动时，相机位置挑战
+    /// </summary>
+    private float UpdateCameraLookUpPlayer (float route)
+    {
+        return (route - 90) / 90 * baseDistance * cameraUnDownOffset;
     }
 }
