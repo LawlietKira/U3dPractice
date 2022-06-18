@@ -303,6 +303,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5607230279113803399, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230279113803399, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230279113803399, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230279113803399, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
       propertyPath: ground
@@ -310,8 +330,18 @@ PrefabInstance:
       objectReference: {fileID: 120133494}
     - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
+      propertyPath: deltaDistance
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
       propertyPath: useCameraLerp
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: cameraDistance
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
@@ -335,6 +365,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
+      propertyPath: maxCamareDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
       propertyPath: playerRunningLerp
       value: 0.3
       objectReference: {fileID: 0}
@@ -352,6 +387,16 @@ PrefabInstance:
         type: 3}
       propertyPath: cameraLeftRightCoefficient
       value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230281157863518, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5607230281157863519, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8659288218860126346, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}

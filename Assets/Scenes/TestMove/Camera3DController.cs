@@ -7,12 +7,22 @@ public class Camera3DController : MonoBehaviour
     public GameObject Player;
     [LabelText("相机")]
     public new Camera camera;
+
     [LabelText("默认相机偏移")]
     public Vector3 cameraOffset = new Vector3(0, 5, -15);
     [LabelText("默认相机角度旋转")]
     public Vector3 cameraRotate = new Vector3(15, 0, 0);
     [LabelText("相机聚焦目标")]
     public GameObject cameraLookUpTarget;
+    [LabelText("相机距离")]
+    public float cameraDistance = 7f;
+
+    [LabelText("滚轮变化率")]
+    public float deltaDistance = 0.1f;
+    [LabelText("最大视角距离")]
+    public float maxCamareDistance = 10f;
+    [LabelText("最小视角距离")]
+    public float minCamareDistance = 2f;
 
     [Header("相机位移Lerp")]
     [LabelText("移动时的相机Lerp")]
@@ -42,13 +52,12 @@ public class Camera3DController : MonoBehaviour
     private PlayerController playerController;
     private float currentLerp = 1;
     private Vector3 groundScale;
-    private Vector3 baseCameraOffset;
-    private float baseDistance;
-    private Vector3 lasetPosition;
+    private Vector3 localCameraGroundPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         //Debug.Log(camera.transform.forward);
         // 获取物体刚体
         myRigidbody = Player.transform.GetComponent<Rigidbody>();
@@ -56,9 +65,6 @@ public class Camera3DController : MonoBehaviour
         myRigidbody.constraints = RigidbodyConstraints.FreezeRotation;
         // 取消世界空间重力影响
         //myRigidbody.useGravity = false;
-
-        // 记录默认的相机偏移
-        baseCameraOffset = cameraOffset;
 
         playerController = Player.transform.GetComponent<PlayerController>();
 
@@ -70,9 +76,6 @@ public class Camera3DController : MonoBehaviour
         groundScale = ground.transform.localScale;
         groundScale.y = 0;
 
-        // 默认相机到人的距离
-        baseDistance = baseCameraOffset.magnitude;
-
         Cursor.visible = false; //隐藏鼠标指针
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -80,12 +83,20 @@ public class Camera3DController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        
+        UpdateCameraPosition();
+    }
+    private void Update()
+    {
+        // 更新相机的旋转
+        UpdateCameraManagerRotation();
+        UpdateDistance();
+        DrawLine();
     }
 
     private void LateUpdate()
     {
-        UpdateCameraPosition();
-        DrawLine();
+        
         //Debug.Log("Player:" + Player.transform.position);
     }
 
@@ -150,8 +161,11 @@ public class Camera3DController : MonoBehaviour
     /// </summary>
     void UpdateCameraManagerPosition ()
     {
-        //camera.transform.localPosition = cameraOffset;
-        transform.localPosition = Vector3.Lerp(transform.localPosition, Player.transform.localPosition, currentLerp);
+        float a = 1 + (maxCamareDistance - cameraDistance) / (maxCamareDistance - minCamareDistance);
+
+        transform.localPosition = Vector3.Lerp(transform.localPosition, Player.transform.localPosition, currentLerp * a);
+
+        //Debug.Log(currentLerp);
     }
 
     /// <summary>
@@ -163,8 +177,8 @@ public class Camera3DController : MonoBehaviour
         UpdateCameraLerp();
         // 更新相机的位移
         UpdateCameraManagerPosition();
-        // 更新相机的旋转
-        UpdateCameraManagerRotation();
+        //// 更新相机的旋转
+        //UpdateCameraManagerRotation();
         //camera.transform.position = Vector3.Lerp(camera.transform.position, Player.transform.position + cameraOffset, currentLerp);
     }
 
@@ -202,14 +216,16 @@ public class Camera3DController : MonoBehaviour
     /// <param name="defaultMoveY"></param>
     private void UpdateCameraRotateX (float defaultMoveY)
     {
+        localCameraGroundPosition = transform.InverseTransformPoint(ground.transform.position);
+
         Vector3 rotate = new Vector3(-Reduce(defaultMoveY) * (cameraUnDownCoefficient + 5) / 10, 0, 0);
         // 计算相机方向，与角色头的夹角
         float v = Vector3.Angle(camera.transform.forward, Player.transform.up);
-        if (v < 20)
+        if (v < 15)
         {
             if (rotate.x > 0)
                 camera.transform.Rotate(rotate.x, rotate.y, rotate.z);
-        } else if (v > 150)
+        } else if (v > 175)
         {
             if (rotate.x < 0)
                 camera.transform.Rotate(rotate.x, rotate.y, rotate.z);
@@ -219,14 +235,34 @@ public class Camera3DController : MonoBehaviour
             camera.transform.Rotate(rotate.x, rotate.y, rotate.z);
         }
         // 鼠标上下移动时位置偏移
-        camera.transform.localPosition = baseCameraOffset + transform.InverseTransformVector(camera.transform.up).normalized * UpdateCameraLookUpPlayer(v);
+        Vector3 currentCameraPosition = cameraLookUpTarget.transform.localPosition + transform.InverseTransformVector(-camera.transform.forward).normalized * cameraDistance;
+        if (currentCameraPosition.y < localCameraGroundPosition.y)
+        {
+            currentCameraPosition = currentCameraPosition * localCameraGroundPosition.y / currentCameraPosition.y;
+        }
+        camera.transform.localPosition = currentCameraPosition;
     }
 
     /// <summary>
-    /// 鼠标上下移动时，相机位置挑战
+    /// 更新滚轮距离
     /// </summary>
-    private float UpdateCameraLookUpPlayer (float route)
+    private void UpdateDistance()
     {
-        return (route - 90) / 90 * baseDistance * cameraUnDownOffset;
+        if (Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            
+            cameraDistance = Mathf.Lerp(cameraDistance, cameraDistance + deltaDistance, 0.1f);
+        } else if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            cameraDistance = Mathf.Lerp(cameraDistance, cameraDistance - deltaDistance, 0.1f);
+        }
+
+        if (cameraDistance > maxCamareDistance)
+        {
+            cameraDistance = maxCamareDistance;
+        } else if (cameraDistance < minCamareDistance)
+        {
+            cameraDistance = minCamareDistance;
+        }
     }
 }
