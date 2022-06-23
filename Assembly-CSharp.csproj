@@ -55,10 +55,15 @@
   <ItemGroup>
     <Compile Include="Assets\Body.cs" />
     <Compile Include="Assets\GravityArrtacter.cs" />
+    <Compile Include="Assets\PlanetController.cs" />
+    <Compile Include="Assets\Scenes\TestGravitation\CameraController.cs" />
+    <Compile Include="Assets\Scenes\TestGravitation\Planet.cs" />
+    <Compile Include="Assets\Scenes\TestGravitation\Universe.cs" />
     <Compile Include="Assets\Scenes\TestMove\Camera3DController.cs" />
     <Compile Include="Assets\Scenes\TestMove\Gravity.cs" />
     <Compile Include="Assets\Scenes\TestMove\PlayerController.cs" />
     <Compile Include="Assets\Scenes\TestMove\PlayerControllerConstant.cs" />
+    <Compile Include="Assets\SecondaryPlanet.cs" />
     <Compile Include="Assets\Test_Keyboard.cs" />
     <Compile Include="Assets\ViewController.cs" />
   </ItemGroup>

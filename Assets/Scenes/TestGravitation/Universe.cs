@@ -15,6 +15,8 @@ public class Universe : MonoBehaviour
     public float _distanceScale;
     [LabelText("时间缩放，天/s")]
     public float _timeScale;
+    [LabelText("运行时间")]
+    public float time;
 
     //public float timeChange;
     //private float _timeChange;
@@ -59,6 +61,7 @@ public class Universe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        time += TimeScale * Time.deltaTime / oneDaySecend / 365.24219f;
         if (_timeScale != lastTiemScale)
         {
             foreach (Planet planet in planets)

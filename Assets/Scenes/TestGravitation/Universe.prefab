@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3043658122734980499}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.521249, y: -6.5908833, z: 6.516209}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 695060809142291352}
@@ -45,9 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04decd79771972c4f8a830caaea9cb7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  planets:
-  - {fileID: 695060809142291356}
-  - {fileID: 1468825696670179208}
+  planets: []
+  _universalGravitation: 6.67408e-11
+  _weightScale: 1e-25
+  _distanceScale: 6.684492e-10
+  _timeScale: 10
+  radiusScale: 5
 --- !u!1001 &3043658122824474890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -123,18 +126,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3043658122824474890}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &695060809142291356 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2564910971329424022, guid: 928959f28d3aefc40a520b28cb19c1aa,
-    type: 3}
-  m_PrefabInstance: {fileID: 3043658122824474890}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d7ed93930be0f45b9a9550665c12f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6029738083337845894
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -210,15 +201,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6029738083337845894}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1468825696670179208 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5174565497324364558, guid: b7e6cda96af48f5429ec217f00b4e5eb,
-    type: 3}
-  m_PrefabInstance: {fileID: 6029738083337845894}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21d7ed93930be0f45b9a9550665c12f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

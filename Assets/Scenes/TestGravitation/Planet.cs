@@ -20,6 +20,24 @@ public class Planet : MonoBehaviour
 
     private new Rigidbody rigidbody;
 
+    [LabelText("太阳引力")]
+    public float gravitation;
+    [LabelText("发动机推力")]
+    public float thrust;
+    [LabelText("离日距离")]
+    public float distance;
+    [LabelText("最大距离")]
+    public float maxDistance;
+    [LabelText("最小距离")]
+    public float minDistance;
+    [LabelText("最大速度")]
+    public float maxSpeed;
+    [LabelText("最小速度")]
+    public float minSpeed;
+    [LabelText("速度变化率")]
+    public float speedRatio;
+    private float lastSpeed;
+
     // 当前受力
     private Vector3 currentForce = Vector3.zero;
     // 所处宇宙
@@ -28,8 +46,14 @@ public class Planet : MonoBehaviour
     private Planet[] otherPlanets;
     // 速度方向
     private Vector3 moveDir = Vector3.zero;
+    // 引擎推力
+    private Vector3 thrustDir;
+
+    public float speed;
 
     public Universe Universe { get => universe; set => universe = value; }
+    public Rigidbody Rigidbody { get => rigidbody; set => rigidbody = value; }
+    public Vector3 ThrustDir { get => thrustDir; set => thrustDir = value; }
 
     private void Awake()
     {
@@ -58,6 +82,8 @@ public class Planet : MonoBehaviour
                 secPlanet.InitPosition(this);
                 secPlanet.InitVelocity(this);
             }
+            maxSpeed = minSpeed = rigidbody.velocity.magnitude / universe.TimeScale / universe._distanceScale;
+            distance = maxDistance = minDistance = (transform.position - otherPlanets[0].transform.position).magnitude / universe._distanceScale / 1000;
         }
     }
 
@@ -66,8 +92,13 @@ public class Planet : MonoBehaviour
     {
         transform.localScale = Vector3.one * radius * universe.radiusScale * 0.00001f;
         CalculatePlanetForce();
-        
+        speed = rigidbody.velocity.magnitude / universe.TimeScale / universe._distanceScale;
+        speedRatio = (speed - lastSpeed) / speed * 1000;
+        lastSpeed = speed;
+        UpdateSpeed();
+        distance = (transform.position - otherPlanets[0].transform.position).magnitude / universe._distanceScale / 1000;
     }
+
 
     public void TimeScaleUpdate ()
     {
@@ -77,6 +108,7 @@ public class Planet : MonoBehaviour
     public void SetVelocity()
     {
         moveDir = rigidbody.velocity / universe.TimeScale;
+        
     }
 
     public void CalculatePlanetForce()
@@ -86,8 +118,12 @@ public class Planet : MonoBehaviour
         {
             CalculatePlanetForceBy2Planet(this, p);
         }
-        rigidbody.AddForce(currentForce * Mathf.Pow(universe.TimeScale, 2));
-        
+        if (name.Equals("Earth"))
+        {
+            gravitation = currentForce.magnitude;
+            thrust = ThrustDir.magnitude;
+        }
+        rigidbody.AddForce((currentForce + ThrustDir) * Mathf.Pow(universe.TimeScale, 2));
     }
 
     public void CalculatePlanetForceBy2Planet(Planet p1, Planet p2)
@@ -122,5 +158,13 @@ public class Planet : MonoBehaviour
             moveDir = initMove + targetPlanet.moveDir;
             rigidbody.velocity = moveDir * universe.TimeScale;
         }
+    }
+
+    void UpdateSpeed()
+    {
+        minSpeed = Mathf.Min(minSpeed, speed);
+        maxSpeed = Mathf.Max(maxSpeed, speed);
+        minDistance = Mathf.Min(minDistance, distance);
+        maxDistance = Mathf.Max(maxDistance, distance);
     }
 }

@@ -336,7 +336,7 @@ PrefabInstance:
     - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}
       propertyPath: useCameraLerp
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5607230280466351759, guid: 1a5a373ee69b0c242b71f41ac1a3bc46,
         type: 3}

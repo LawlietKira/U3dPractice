@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour
     public float height;
     public float moveLerp;
 
-    private float scroll = 1;
+    private float scroll = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateHeight();
+        UpdateHeight2();
     }
 
     private void FixedUpdate()
@@ -33,6 +33,20 @@ public class CameraController : MonoBehaviour
         {
             scroll = 125;
         }
-        height = Mathf.Lerp(height, scroll, 0.1f);
+        height = Mathf.Lerp(height, scroll, 0.05f);
+    }
+
+    private void UpdateHeight2()
+    {
+        scroll -= Input.GetAxis("Mouse ScrollWheel");
+        if (scroll < 1)
+        {
+            scroll = 1;
+        }
+        else if (scroll > 15)
+        {
+            scroll = 15;
+        }
+        height = Mathf.Lerp(height, Mathf.Pow(scroll, 2), 0.05f);
     }
 }
